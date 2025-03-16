@@ -12,5 +12,8 @@
 - hosts: all
   tags: base
   become: true
+  vars:
+    - user: marc
+    - python_version: "3.12.8"
   roles:
     - base

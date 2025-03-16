@@ -1,0 +1,12 @@
+- name: Install Oh My Zsh
+  ansible.builtin.include_role:
+    name: gantsign.oh-my-zsh
+  vars:
+    users:
+      - username: "{{ user }}"
+        oh_my_zsh:
+          theme: robbyrussell
+          plugins:
+            - git
+          update_mode: auto
+          update_frequency: 3

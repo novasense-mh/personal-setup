@@ -1,0 +1,64 @@
+- name: Install dependencies
+  ansible.builtin.package:
+    name:
+      - build-essential
+      - libssl-dev
+      - libsqlite3-dev
+      - libbz2-dev
+      - libgdbm-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - libreadline-dev
+      - zlib1g-dev
+      - libffi-dev
+    state: present
+
+- name: Create a temporary directory
+  ansible.builtin.file:
+    path: "/tmp/Python-{{ python_version }}"
+    state: directory
+
+- name: "Download Python {{ python_version }}"
+  ansible.builtin.get_url:
+    url: "https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tgz"
+    dest: "/tmp/Python-{{ python_version }}.tgz"
+
+- name: Extract Python
+  ansible.builtin.unarchive:
+    src: "/tmp/Python-{{ python_version }}.tgz"
+    dest: /tmp/
+    remote_src: yes
+
+- name: Configure Python build
+  ansible.builtin.command:
+    cmd: ./configure --prefix=/opt/python/{{ python_version }}/ --enable-optimizations --with-lto --with-computed-gotos --with-system-ffi --enable-shared --with-openssl=/usr/local/ssl
+    chdir: "/tmp/Python-{{ python_version }}"
+
+- name: Build Python
+  ansible.builtin.command:
+    cmd: make -j "{{ ansible_processor_count }}"
+    chdir: "/tmp/Python-{{ python_version }}"
+
+- name: Install Python
+  ansible.builtin.command:
+    cmd: make altinstall
+    chdir: "/tmp/Python-{{ python_version }}"
+
+- name: Remove the downloaded tarball
+  ansible.builtin.file:
+    path: "/tmp/Python-{{ python_version }}.tgz"
+    state: absent
+
+- name: Upgrade pip, setuptools, and wheel
+  ansible.builtin.pip:
+    name:
+      - pip
+      - setuptools
+      - wheel
+    state: latest
+    executable: /opt/python/{{ python_version }}/bin/python{{ python_version }}
+
+- name: Install uv package
+  ansible.builtin.pip:
+    name: uv
+    executable: /opt/python/{{ python_version }}/bin/python{{ python_version }}

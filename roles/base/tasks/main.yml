@@ -3,4 +3,8 @@
   tags: always
 
 - block:
-    - import_tasks: software/base.yml
+    - ansible.builtin.import_tasks: software/base.yml
+    - ansible.builtin.import_tasks: software/docker.yml
+    - ansible.builtin.import_tasks: software/fonts.yml
+    - ansible.builtin.import_tasks: software/zsh.yml
+    - ansible.builtin.import_tasks: software/python.yml

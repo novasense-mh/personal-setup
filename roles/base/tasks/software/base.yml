@@ -1,3 +1,19 @@
-- name: Install Docker
-  ansible.builtin.include_role:
-    name: geerlingguy.docker
+- name: Install base packages
+  ansible.builtin.package:
+    name:
+      - bat
+      - curl
+      - fonts-powerline
+      - gcc
+      - git
+      - htop
+      - neovim
+      - net-tools
+      - ripgrep
+      - sysstat
+      - tree
+      - unzip
+      - wget
+      - xclip
+      - zsh
+    state: present
