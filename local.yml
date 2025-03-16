@@ -1,0 +1,14 @@
+- hosts: all
+  tags: always
+  become: true
+  pre_tasks:
+    - name: Pre-task | Update package cache
+      tags: always
+      apt: update_cache=yes
+      changed_when: False
+
+- hosts: all
+  tags: base
+  become: true
+  roles:
+    - base
