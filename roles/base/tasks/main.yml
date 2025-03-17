@@ -10,7 +10,7 @@
     - name: Install Docker engine
       ansible.builtin.import_tasks: software/docker.yml
 
-    - name: Configure Zsh
+    - name: Install ZSH and plugins
       ansible.builtin.import_tasks: software/zsh.yml
 
     - name: Check actual Python version
@@ -36,6 +36,3 @@
 
     - name: Configure Neovim
       ansible.builtin.import_tasks: config/nvim.yml
-
-    - name: Configure Timewarrior
-      ansible.builtin.import_tasks: config/timewarrior.yml

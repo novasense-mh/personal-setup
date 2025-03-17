@@ -1,14 +1,11 @@
 - name: Set git username
   ansible.builtin.command:
     cmd: "git config --global user.name '{{ git_username }}'"
-  become_user: "{{ user }}"
 
 - name: Set git email
   ansible.builtin.command:
     cmd: "git config --global user.email '{{ git_email }}'"
-  become_user: "{{ user }}"
 
 - name: Set git editor
   ansible.builtin.command:
     cmd: git config --global core.editor "nvim"
-  become_user: "{{ user }}"
