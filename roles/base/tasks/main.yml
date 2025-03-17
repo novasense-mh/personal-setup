@@ -34,3 +34,5 @@
     - name: Configure Git
       ansible.builtin.import_tasks: config/git.yml
 
+    - name: Configur Neovim
+      ansible.builtin.import_tasks: config/nvim.yml

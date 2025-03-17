@@ -1,0 +1,6 @@
+- name: Clone nvim-lua/kickstart.nvim repository
+  ansible.builtin.git:
+    repo: 'git@github.com:novasense-mh/kickstart.nvim.git'
+    dest: "{{ lookup('env', 'XDG_CONFIG_HOME') | default('/home/' + lookup('env', 'USER') + '/.config/nvim', true) }}"
+    version: master
+  become_user: "{{ user }}"
