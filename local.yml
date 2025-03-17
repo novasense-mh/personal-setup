@@ -13,9 +13,9 @@
   tags: base
   become: true
   vars:
-    - user: marc
-    - python_version: "3.12.8"
-    - git_username: Marc Hauser
-    - git_email: marc.hauser@novasense.ch
+    user: marc
+    python_version: "3.12.8"
+    git_username: Marc Hauser
+    git_email: marc.hauser@novasense.ch
   roles:
     - base

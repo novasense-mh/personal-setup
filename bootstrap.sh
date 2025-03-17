@@ -6,5 +6,6 @@ sudo apt install -y \
   pipx
 
 pipx upgrade ansible
+pipx upgrade ansible-core
 ansible-galaxy install -r requirements.yml
 ansible-playbook local.yml
