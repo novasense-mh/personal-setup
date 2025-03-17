@@ -24,7 +24,7 @@
 
     - name: Install requested Python version
       ansible.builtin.import_tasks: software/python.yml
-      when: python_version_actual == python_version
+      when: python_version_actual != python_version
 
   # Fonts
     - name: Install fonts

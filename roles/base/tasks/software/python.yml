@@ -61,6 +61,7 @@
       - wheel
     break_system_packages: true
     state: latest
+  become_user : "{{ user }}"
 
 - name: Install uv package
   ansible.builtin.pip:
