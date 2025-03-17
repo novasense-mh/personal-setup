@@ -27,7 +27,7 @@
   ansible.builtin.unarchive:
     src: "/tmp/Python-{{ python_version }}.tgz"
     dest: /tmp/
-    remote_src: yes
+    remote_src: true
 
 - name: Configure Python build
   ansible.builtin.command:
@@ -49,16 +49,20 @@
     path: "/tmp/Python-{{ python_version }}.tgz"
     state: absent
 
+- name: Set python default version
+  ansible.builtin.command:
+    cmd: "update-alternatives --install /usr/bin/python python /usr/local/bin/python{{ python_version.split('.')[0] }}.{{ python_version.split('.')[1] }} 1"
+
 - name: Upgrade pip, setuptools, and wheel
   ansible.builtin.pip:
     name:
       - pip
       - setuptools
       - wheel
+    break_system_packages: true
     state: latest
-    executable: /opt/python/{{ python_version }}/bin/python{{ python_version }}
 
 - name: Install uv package
   ansible.builtin.pip:
     name: uv
-    executable: /opt/python/{{ python_version }}/bin/python{{ python_version }}
+
