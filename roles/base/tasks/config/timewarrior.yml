@@ -1,0 +1,21 @@
+- name: Check if timewarrior plugin directory exists
+  ansible.builtin.stat:
+    path: ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/timewarrior
+  register: _plugin_dir_stat
+  become_user: "{{ user }}"
+
+- name: Clone timewarrior plugin repository
+  ansible.builtin.command:
+    cmd: git clone https://github.com/svenXY/timewarrior ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/timewarrior
+  become_user: "{{ user }}"
+  when: not _plugin_dir_stat.stat.exists
+
+
+- name: Add plugin to ZSH
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    regexp: '^plugins=\('
+    line: 'plugins=(git timewarrior)'
+    backrefs: yes
+  become_user: "{{ user }}"
+

@@ -34,5 +34,8 @@
     - name: Configure Git
       ansible.builtin.import_tasks: config/git.yml
 
-    - name: Configur Neovim
+    - name: Configure Neovim
       ansible.builtin.import_tasks: config/nvim.yml
+
+    - name: Configure Timewarrior
+      ansible.builtin.import_tasks: config/timewarrior.yml

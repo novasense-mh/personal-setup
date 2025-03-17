@@ -11,6 +11,7 @@
       - net-tools
       - ripgrep
       - sysstat
+      - timewarrior
       - tree
       - unzip
       - wget
