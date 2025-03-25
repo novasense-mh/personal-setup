@@ -9,6 +9,7 @@
       - htop
       - neovim
       - net-tools
+      - rclone
       - ripgrep
       - sysstat
       - timewarrior
