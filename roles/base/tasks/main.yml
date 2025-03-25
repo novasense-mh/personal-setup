@@ -12,6 +12,7 @@
 
     - name: Install ZSH and plugins
       ansible.builtin.import_tasks: software/zsh.yml
+      become_user: "{{ user }}"
 
     - name: Check actual Python version
       ansible.builtin.command:
@@ -29,10 +30,14 @@
   # Fonts
     - name: Install fonts
       ansible.builtin.import_tasks: fonts/fonts.yml
+      become_user: "{{ user }}"
 
   # Configuration
     - name: Configure Git
       ansible.builtin.import_tasks: config/git.yml
+      become_user: "{{ user }}"
 
     - name: Configure Neovim
       ansible.builtin.import_tasks: config/nvim.yml
+      become_user: "{{ user }}"
+

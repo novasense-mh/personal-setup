@@ -1,7 +1,7 @@
 - name: Install timewarrior plugin
   ansible.builtin.git:
     repo: https://github.com/svenXY/timewarrior
-    dest: ~/.oh-my-zsh/custom}/plugins/timewarrior
+    dest: ~/.oh-my-zsh/custom/plugins/timewarrior
     depth: 1
 
 - name: Install zsh-autosuggestions plugin # noqa: latest
