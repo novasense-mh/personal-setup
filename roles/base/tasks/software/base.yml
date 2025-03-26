@@ -12,6 +12,7 @@
       - rclone
       - ripgrep
       - sysstat
+      - thunderbird
       - timewarrior
       - tree
       - unzip

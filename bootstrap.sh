@@ -3,7 +3,8 @@
 sudo apt update
 sudo apt install -y \
   ansible \
-  pipx
+  pipx \
+  python-is-python3
 
 pipx --break-system-packages upgrade ansible
 pipx --break-system-packages upgrade ansible-core

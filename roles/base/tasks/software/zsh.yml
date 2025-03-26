@@ -1,3 +1,9 @@
+- name: Install Oh My Zsh # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: ~/.oh-my-zsh
+    depth: 1
+
 - name: Install timewarrior plugin
   ansible.builtin.git:
     repo: https://github.com/svenXY/timewarrior
@@ -22,23 +28,3 @@
     dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
     depth: 1
 
-- name: Install Oh My Zsh
-  ansible.builtin.include_role:
-    name: gantsign.oh-my-zsh
-    apply:
-      become: true
-      become_user: root
-  vars:
-    oh_my_zsh_write_zshrc: true
-    users:
-      - username: "{{ user }}"
-        oh_my_zsh:
-          theme: robbyrussell
-          plugins:
-            - git
-            - timewarrior
-            - zsh-autosuggestions
-            - zsh-completions
-            - zsh-syntax-highlighting
-          update_mode: auto
-          update_frequency: 3
