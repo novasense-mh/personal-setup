@@ -23,6 +23,9 @@
     - name: Install Joplin
       ansible.builtin.import_tasks: software/joplin.yml
 
+    - name: Install tabby
+      ansible.builtin.import_tasks: software/tabby.yml
+
     - name: Check actual Python version
       ansible.builtin.command:
         cmd: python --version

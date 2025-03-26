@@ -1,3 +1,9 @@
+- name: Install Oh My Zsh # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: ~/.oh-my-zsh
+    depth: 1
+
 - name: Install timewarrior plugin
   ansible.builtin.git:
     repo: https://github.com/svenXY/timewarrior

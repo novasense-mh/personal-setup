@@ -19,4 +19,5 @@
     git_username: Marc Hauser
     git_email: marc.hauser@novasense.ch
   roles:
+    - staticdev.brave
     - base
