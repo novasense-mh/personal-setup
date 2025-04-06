@@ -51,7 +51,7 @@
 
 - name: Set python default version
   ansible.builtin.command:
-    cmd: "update-alternatives --install /usr/bin/python python /usr/local/bin/python{{ python_version.split('.')[0] }}.{{ python_version.split('.')[1] }} 1"
+    cmd: "update-alternatives --install /usr/bin/python python /opt/python/{{ python_version }}/python{{ python_version.split('.')[0] }}.{{ python_version.split('.')[1] }} 1"
 
 - name: Upgrade pip, setuptools, and wheel
   ansible.builtin.pip:
