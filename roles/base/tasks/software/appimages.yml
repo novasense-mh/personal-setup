@@ -10,6 +10,7 @@
     - { name: "kChat", url: "{{ base_appimage_kchat_url }}" }
     - { name: "kDrive", url: "{{ base_appimage_kdrive_url }}" }
     - { name: "Nextcloud", url: "{{ base_appimage_nextcloud_url }}" }
+    - { name: "LedgerLive", url: "{{ base_appimage_ledgerlive_url }}" }
   loop_control:
     label: "{{ item.name }}"
   get_url:
