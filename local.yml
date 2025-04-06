@@ -20,4 +20,5 @@
     git_email: marc.hauser@novasense.ch
   roles:
     - staticdev.brave
+    - darkwizard242.vscode
     - base

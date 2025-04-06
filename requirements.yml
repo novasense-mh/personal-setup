@@ -3,4 +3,6 @@ roles:
     version: "7.4.5"
   - name: staticdev.brave
     version: "1.3.2"
+  - name: darkwizard242.vscode
+    version: "1.5.0"
 
