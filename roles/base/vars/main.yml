@@ -1,4 +1,3 @@
 ---
 # vars file for base
-base_appimage_dir: "~/Applications"
-base_kchat_appimage: https://download.storage5.infomaniak.com/kchat/kchat-desktop-3.3.3-linux-x86_64.AppImage
+

@@ -43,9 +43,6 @@
       ansible.builtin.import_tasks: software/python.yml
       when: python_version_actual != python_version
 
-    - name: Install Infomaniak kSuite
-      ansible.builtin.import_tasks: software/infomaniak.yml
-
   # Fonts
     - name: Install fonts
       ansible.builtin.import_tasks: fonts/fonts.yml

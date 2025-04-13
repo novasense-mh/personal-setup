@@ -1,8 +1,9 @@
 - name: Ensure ~/Applications directory exists
   file:
-    path: "~/Applications"
+    path: "{{ base_appimage_dir }}"
     state: directory
     mode: "0755"
+  become_user: "{{ user }}"
 
 - name: Download and make AppImages executable
   with_items:
@@ -15,5 +16,6 @@
     label: "{{ item.name }}"
   get_url:
     url: "{{ item.url }}"
-    dest: "~/Applications/{{ item.name }}.AppImage"
+    dest: "{{ base_appimage_dir }}/{{ item.name }}.AppImage"
     mode: "0755"
+  become_user: "{{ user }}"

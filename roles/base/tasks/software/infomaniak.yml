@@ -1,5 +1,0 @@
-- name: Install kChat
-  get_url:
-    url: "{{ base_kchat_appimage }}"
-    dest: "{{base_appimage_dir}}/kChat.AppImage"
-    mode: '0755'

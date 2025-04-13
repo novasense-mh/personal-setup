@@ -1,3 +1,14 @@
+- name: Download git delta
+  ansible.builtin.get_url:
+    url: "{{ base_git_delta_url}}"
+    dest: /tmp/git-delta.deb
+
+- name: Install git delta package
+  ansible.builtin.apt:
+    deb: /tmp/git-delta.deb
+  become: true
+  become_user: root
+
 - name: Set git username
   ansible.builtin.command:
     cmd: "git config --global user.name '{{ git_username }}'"
@@ -13,3 +24,27 @@
 - name: Set git pull strategy to ff-only
   ansible.builtin.command:
     cmd: git config --global pull.ff only
+
+- name: Set git pager to delta
+  ansible.builtin.command:
+    cmd: git config --global core.pager delta
+
+- name: Set git interactive diff filter
+  ansible.builtin.command:
+    cmd: git config --global interactive.diffFilter 'delta --color-only'
+
+- name: Enable delta navigation
+  ansible.builtin.command:
+    cmd: git config --global delta.navigate true
+
+- name: Set git merge conflict style to zdiff3
+  ansible.builtin.command:
+    cmd: git config --global merge.conflictStyle zdiff3
+
+- name: Set git delta line numbers
+  ansible.builtin.command:
+    cmd: git config --global delta.line-numbers true
+
+- name: Set git delta side-by-side
+  ansible.builtin.command:
+    cmd: git config --global delta.side-by-side true
