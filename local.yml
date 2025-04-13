@@ -12,7 +12,6 @@
 - hosts: all
   tags: base
   become: true
-  become_user: "{{ user }}"
   vars:
     ansible_python_interpreter: /usr/bin/python
     user: marc
@@ -20,4 +19,5 @@
     git_username: Marc Hauser
     git_email: marc.hauser@novasense.ch
   roles:
+    - staticdev.brave
     - base

@@ -9,8 +9,10 @@
       - htop
       - neovim
       - net-tools
+      - rclone
       - ripgrep
       - sysstat
+      - thunderbird
       - timewarrior
       - tree
       - unzip
