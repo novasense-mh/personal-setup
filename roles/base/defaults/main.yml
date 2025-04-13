@@ -1,2 +1,7 @@
 ---
 # defaults file for base
+base_appimage_kmeet_url: https://download.storage5.infomaniak.com/meet/kmeet-desktop-2.0.1-linux-x86_64.AppImage
+base_appimage_kchat_url: https://download.storage5.infomaniak.com/kchat/kchat-desktop-3.3.3-linux-x86_64.AppImage
+base_appimage_kdrive_url: https://download.storage.infomaniak.com/drive/desktopclient/kDrive-3.6.9.20250304-amd64.AppImage
+base_appimage_nextcloud_url: https://github.com/nextcloud-releases/desktop/releases/download/v3.16.2/Nextcloud-3.16.2-x86_64.AppImage
+base_appimage_ledgerlive_url: https://download.live.ledger.com/latest/linux

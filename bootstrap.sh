@@ -6,8 +6,8 @@ sudo apt install -y \
   pipx \
   python-is-python3
 
-pipx --break-system-packages upgrade ansible
-pipx --break-system-packages upgrade ansible-core
+pipx install --include-deps ansible
+pipx install ansible-core~=2.17
 sudo python -m pip --break-system-packages install packaging
 ansible-galaxy install -r requirements.yml
-ansible-playbook local.yml
+ansible-playbook --ask-become-pass local.yml
