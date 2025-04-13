@@ -42,3 +42,9 @@
             - zsh-syntax-highlighting
           update_mode: auto
           update_frequency: 3
+
+- name: Change user shell to zsh
+  ansible.builtin.user:
+    name: "{{ user }}"
+    shell: /bin/zsh
+

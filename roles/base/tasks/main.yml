@@ -4,6 +4,12 @@
 
 - block:
   # Software
+    - name: Malke sure Appimage directory exists
+      ansible.builtin.file:
+        path: ~/AppImages
+        state: directory
+        mode: '0755'
+
     - name: Install base packages
       ansible.builtin.import_tasks: software/base.yml
 
@@ -25,6 +31,9 @@
     - name: Install requested Python version
       ansible.builtin.import_tasks: software/python.yml
       when: python_version_actual != python_version
+
+    - name: Install Infomaniak kSuite
+      ansible.builtin.import_tasks: software/infomaniak.yml
 
   # Fonts
     - name: Install fonts
