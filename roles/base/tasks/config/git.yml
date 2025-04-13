@@ -9,3 +9,7 @@
 - name: Set git editor
   ansible.builtin.command:
     cmd: git config --global core.editor "nvim"
+
+- name: Set git pull strategy to ff-only
+  ansible.builtin.command:
+    cmd: git config --global pull.ff only
