@@ -53,6 +53,7 @@
     - tabby
     - zsh
     - python
+    - chezmoi
 
   tasks:
     - name: Install base packages

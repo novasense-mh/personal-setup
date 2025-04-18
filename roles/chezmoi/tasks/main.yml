@@ -1,0 +1,7 @@
+- name: Install chezmoi
+  ansible.builtin.shell:
+    cmd: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
+  args:
+    creates: ~/.local/bin/chezmoi
+  become: false
+  become_user: "{{ host_user }}"
