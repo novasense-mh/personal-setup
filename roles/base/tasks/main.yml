@@ -26,6 +26,9 @@
     - name: Install tabby
       ansible.builtin.import_tasks: software/tabby.yml
 
+    - name: Install GitHub CLI
+      ansible.builtin.import_tasks: software/github_cli.yml
+
     - name: Install Appimage based software
       ansible.builtin.import_tasks: software/appimages.yml
       become_user: "{{ user }}"
