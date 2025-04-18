@@ -3,9 +3,9 @@
 sudo apt update
 sudo apt install -y \
   ansible \
-  pipx \
   python-is-python3
 
+python3 -m pip install --user pipx
 pipx install --include-deps ansible
 pipx install ansible-core~=2.17
 sudo python -m pip --break-system-packages install packaging

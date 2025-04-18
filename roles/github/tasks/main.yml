@@ -1,29 +1,3 @@
-- name: Create /etc/apt/keyrings directory
-  ansible.builtin.file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
-  become: true
-
-- name: Download GitHub CLI GPG key
-  ansible.builtin.get_url:
-    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
-    dest: /tmp/githubcli-archive-keyring.gpg
-    mode: '0644'
-
-- name: Move GPG key to /etc/apt/keyrings
-  ansible.builtin.copy:
-    src: /tmp/githubcli-archive-keyring.gpg
-    dest: /etc/apt/keyrings/githubcli-archive-keyring.gpg
-    remote_src: true
-  become: true
-
-- name: Set permissions for GPG key
-  ansible.builtin.file:
-    path: /etc/apt/keyrings/githubcli-archive-keyring.gpg
-    mode: '0644'
-  become: true
-
 - name: Install GitHub CLI
   ansible.builtin.apt:
     name: gh

@@ -2,16 +2,42 @@
   tags: always
   become: true
   pre_tasks:
+    - name: Create /etc/apt/keyrings directory
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+      become: true
+
+    - name: Download GitHub CLI GPG key
+      ansible.builtin.get_url:
+        url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+        dest: /tmp/githubcli-archive-keyring.gpg
+        mode: '0644'
+
+    - name: Move GPG key to /etc/apt/keyrings
+      ansible.builtin.copy:
+        src: /tmp/githubcli-archive-keyring.gpg
+        dest: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+        remote_src: true
+      become: true
+
+    - name: Set permissions for GPG key
+      ansible.builtin.file:
+        path: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+        mode: '0644'
+      become: true
+
     - name: Add apt repositories
       ansible.builtin.apt_repository:
         repo: "{{ item }}"
         state: present
       with_items:
-        - "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+        - "deb [arch=amd64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
       become: true
 
     - name: Pre-task | Update package cache
-      apt:
+      ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 3600
       changed_when: false
