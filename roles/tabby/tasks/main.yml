@@ -1,0 +1,9 @@
+- name: Check if tabby is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/tabby
+  register: tabby_installed
+
+- name: Download tabby deb package
+  ansible.builtin.apt:
+    deb: https://github.com/Eugeny/tabby/releases/download/v1.0.223/tabby-1.0.223-linux-x64.deb
+  when: not tabby_installed.stat.exists

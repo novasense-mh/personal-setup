@@ -1,0 +1,89 @@
+- hosts: all
+  tags: always
+  become: true
+  pre_tasks:
+    - name: Add apt repositories
+      ansible.builtin.apt_repository:
+        repo: "{{ item }}"
+        state: present
+      with_items:
+        - "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+      become: true
+
+    - name: Pre-task | Update package cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+      changed_when: false
+      tags: always
+
+    - name: Detect Host User
+      ansible.builtin.import_tasks: pre_tasks/whoami.yml
+
+    - name: Pre-task | Prepare AppImage directory
+      ansible.builtin.file:
+        path: ~/AppImages
+        state: directory
+        mode: '0755'
+      become_user: "{{ host_user }}"
+
+- hosts: all
+  tags: base
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+    zsh_jetbrainsmononerd_fonts_src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
+    git_delta_url: https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb
+    appimages:
+      - { name: "kMeet", url: https://download.storage5.infomaniak.com/meet/kmeet-desktop-2.0.1-linux-x86_64.AppImage }
+      - { name: "kChat", url: https://download.storage5.infomaniak.com/kchat/kchat-desktop-3.3.3-linux-x86_64.AppImage }
+      - { name: "kDrive", url: https://download.storage.infomaniak.com/drive/desktopclient/kDrive-3.6.9.20250304-amd64.AppImage }
+      - { name: "Nextcloud", url: https://github.com/nextcloud-releases/desktop/releases/download/v3.16.2/Nextcloud-3.16.2-x86_64.AppImage }
+      - { name: "LedgerLive", url: https://download.live.ledger.com/latest/linux }
+    python_version: "3.12.8"
+    git_username: Marc Hauser
+    git_email: marc.hauser@novasense.ch
+
+  roles:
+    - staticdev.brave
+    - darkwizard242.vscode
+    - geerlingguy.docker
+    - github
+    - joplin
+    - tabby
+    - zsh
+    - python
+
+  tasks:
+    - name: Install base packages
+      ansible.builtin.package:
+        name:
+          - bat
+          - curl
+          - fonts-powerline
+          - gcc
+          - git
+          - htop
+          - neovim
+          - net-tools
+          - rclone
+          - ripgrep
+          - sysstat
+          - thunderbird
+          - timewarrior
+          - tree
+          - unzip
+          - wget
+          - xclip
+          - zsh
+        state: present
+
+    - name: Download and make AppImages executable
+      ansible.builtin.get_url:
+        url: "{{ item.url }}"
+        dest: "~/AppImages/{{ item.name }}.AppImage"
+        mode: "0755"
+      become_user: "{{ host_user }}"
+      with_items: "{{ appimages }}"
+      loop_control:
+        label: "{{ item.name }}"

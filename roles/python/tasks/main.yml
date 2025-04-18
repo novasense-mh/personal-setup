@@ -1,0 +1,12 @@
+- name: Check actual Python version
+  ansible.builtin.command:
+    cmd: python --version
+  register: python_version_raw
+
+- name: Extract Python version
+  ansible.builtin.set_fact:
+    python_version_actual: "{{ python_version_raw.stdout.split(' ')[1] }}"
+
+- name: Install requested Python version
+  ansible.builtin.import_tasks: install_python.yml
+  when: python_version_actual != python_version

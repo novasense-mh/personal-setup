@@ -1,6 +1,6 @@
 - name: Download git delta
   ansible.builtin.get_url:
-    url: "{{ base_git_delta_url}}"
+    url: "{{ git_delta_url}}"
     dest: /tmp/git-delta.deb
 
 - name: Install git delta package

@@ -1,3 +1,39 @@
+- name: Install Jetbrains Nerd Font
+  block:
+    - name: Check if JetBrainsMonoNerd fonts are already installed
+      ansible.builtin.stat:
+        path: "/home/{{ host_user }}/.fonts/JetBrainsMonoNerd"
+      register: jetbrains_fonts
+
+    - name: Skip font installation if already installed
+      ansible.builtin.debug:
+        msg: "JetBrainsMonoNerd fonts are already installed."
+      when: jetbrains_fonts.stat.exists
+
+    - name: Create .fonts Directory
+      ansible.builtin.file:
+        path: "/home/{{ host_user }}/.fonts/JetBrainsMonoNerd"
+        state: directory
+        mode: "0755"
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+      when: not jetbrains_fonts.stat.exists
+
+    - name: Download JetBrainsMonoNerd fonts
+      ansible.builtin.unarchive:
+        src: "{{ zsh_jetbrainsmononerd_fonts_src }}"
+        dest: "/home/{{ host_user }}/.fonts/JetBrainsMonoNerd"
+        remote_src: true
+        owner: "{{ host_user }}"
+        group: "{{ host_user }}"
+      when: not jetbrains_fonts.stat.exists
+
+    - name: Font cache update
+      ansible.builtin.command:
+        cmd: fc-cache -fv
+      when: not jetbrains_fonts.stat.exists
+      changed_when: false
+
 - name: Install Oh My Zsh # noqa: latest
   ansible.builtin.git:
     repo: https://github.com/ohmyzsh/ohmyzsh.git
@@ -37,7 +73,7 @@
   vars:
     oh_my_zsh_write_zshrc: true
     users:
-      - username: "{{ user }}"
+      - username: "{{ host_user }}"
         oh_my_zsh:
           theme: robbyrussell
           plugins:
@@ -51,6 +87,5 @@
 
 - name: Change user shell to zsh
   ansible.builtin.user:
-    name: "{{ user }}"
+    name: "{{ host_user }}"
     shell: /bin/zsh
-

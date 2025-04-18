@@ -1,0 +1,6 @@
+# From https://github.com/TechDufus/dotfiles/blob/main/pre_tasks/whoami.yml
+---
+- name: Register Current User
+  ansible.builtin.set_fact:
+    host_user: "{{ ansible_env['USER']}}"
+  when: host_user is not defined

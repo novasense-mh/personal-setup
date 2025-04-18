@@ -7,5 +7,5 @@
 - name: Run Joplin installation script
   ansible.builtin.command:
     cmd: /tmp/Joplin_install_and_update.sh
-  become_user: "{{ user }}"
-
+  become: false
+  become_user: "{{ host_user }}"

@@ -65,4 +65,3 @@
 - name: Install uv package
   ansible.builtin.pip:
     name: uv
-
