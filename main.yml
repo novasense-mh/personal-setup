@@ -1,41 +1,6 @@
 - hosts: all
   tags: always
-  become: true
   pre_tasks:
-    - name: Create /etc/apt/keyrings directory
-      ansible.builtin.file:
-        path: /etc/apt/keyrings
-        state: directory
-        mode: '0755'
-      become: true
-
-    - name: Download GitHub CLI GPG key
-      ansible.builtin.get_url:
-        url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
-        dest: /tmp/githubcli-archive-keyring.gpg
-        mode: '0644'
-
-    - name: Move GPG key to /etc/apt/keyrings
-      ansible.builtin.copy:
-        src: /tmp/githubcli-archive-keyring.gpg
-        dest: /etc/apt/keyrings/githubcli-archive-keyring.gpg
-        remote_src: true
-      become: true
-
-    - name: Set permissions for GPG key
-      ansible.builtin.file:
-        path: /etc/apt/keyrings/githubcli-archive-keyring.gpg
-        mode: '0644'
-      become: true
-
-    - name: Add apt repositories
-      ansible.builtin.apt_repository:
-        repo: "{{ item }}"
-        state: present
-      with_items:
-        - "deb [arch=amd64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
-      become: true
-
     - name: Pre-task | Update package cache
       ansible.builtin.apt:
         update_cache: true
@@ -45,6 +10,7 @@
 
     - name: Detect Host User
       ansible.builtin.import_tasks: pre_tasks/whoami.yml
+      become: false
 
     - name: Pre-task | Prepare AppImage directory
       ansible.builtin.file:
@@ -55,7 +21,6 @@
 
 - hosts: all
   tags: base
-  become: true
   vars:
     ansible_python_interpreter: /usr/bin/python
     zsh_jetbrainsmononerd_fonts_src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
@@ -72,8 +37,8 @@
 
   roles:
     - staticdev.brave
-    - darkwizard242.vscode
-    - geerlingguy.docker
+    - { role: geerlingguy.docker, become: true }
+    - git
     - github
     - joplin
     - tabby
@@ -102,7 +67,6 @@
           - unzip
           - wget
           - xclip
-          - zsh
         state: present
 
     - name: Download and make AppImages executable
@@ -110,7 +74,6 @@
         url: "{{ item.url }}"
         dest: "~/AppImages/{{ item.name }}.AppImage"
         mode: "0755"
-      become_user: "{{ host_user }}"
       with_items: "{{ appimages }}"
       loop_control:
         label: "{{ item.name }}"
