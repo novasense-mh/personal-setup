@@ -31,7 +31,7 @@
 
 - name: Configure Python build
   ansible.builtin.command:
-    cmd: ./configure --enable-optimizations --with-ensurepip=install --with-lto --with-computed-gotos --with-system-ffi --enable-shared
+    cmd: ./configure --enable-optimizations --with-ensurepip=install --with-lto
     chdir: "/tmp/Python-{{ python_version }}"
 
 - name: Build Python
@@ -48,19 +48,6 @@
   ansible.builtin.file:
     path: "/tmp/Python-{{ python_version }}.tgz"
     state: absent
-
-- name: Set python default version
-  ansible.builtin.command:
-    cmd: "update-alternatives --install /usr/bin/python3 python /usr/local/bin/python{{ python_version.split('.')[0] }}.{{ python_version.split('.')[1] }} 2"
-
-- name: Upgrade pip, setuptools, and wheel
-  ansible.builtin.pip:
-    name:
-      - pip
-      - setuptools
-      - wheel
-    break_system_packages: true
-    state: latest
 
 - name: Install uv package
   ansible.builtin.pip:

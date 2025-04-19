@@ -37,10 +37,6 @@
   ansible.builtin.command:
     cmd: git config --global delta.navigate true
 
-- name: Set git merge conflict style to zdiff3
-  ansible.builtin.command:
-    cmd: git config --global merge.conflictStyle zdiff3
-
 - name: Set git delta line numbers
   ansible.builtin.command:
     cmd: git config --global delta.line-numbers true

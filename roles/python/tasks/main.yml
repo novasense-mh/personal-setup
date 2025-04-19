@@ -1,12 +1,18 @@
+- name: Build Python major.minor version
+  ansible.builtin.set_fact:
+    python_major_minor_version: "{{ python_version.split('.')[0] }}.{{ python_version.split('.')[1] }}"
+
 - name: Check actual Python version
   ansible.builtin.command:
-    cmd: python --version
+    cmd: "python{{python_major_minor_version}} --version"
   register: python_version_raw
+  failed_when: false
 
 - name: Extract Python version
   ansible.builtin.set_fact:
     python_version_actual: "{{ python_version_raw.stdout.split(' ')[1] }}"
+  when: python_version_raw.stdout is defined
 
 - name: Install requested Python version
   ansible.builtin.import_tasks: install_python.yml
-  when: python_version_actual != python_version
+  when: python_version_raw.stdout is not defined or python_version_actual is defined and python_version_actual != python_version

@@ -1,0 +1,31 @@
+- name: Installing dependencies for vscode
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - curl
+      - ca-certificates
+      - lsb-release
+      - gnupg
+    state: present
+    force_apt_get: true
+  become: true
+
+- name: Add gpg signing key for vscode
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Adding repository {{ vscode_debian_repo_when_x86_64 }}
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/code stable main"
+    state: present
+    filename: vscode
+    update_cache: yes
+
+- name: Installing vscode 
+  ansible.builtin.apt:
+    name: code
+    state: present
+    force_apt_get: true
+    update_cache: true
+  become: true
