@@ -12,6 +12,7 @@
       - zlib1g-dev
       - libffi-dev
     state: present
+  become: true
 
 - name: Create a temporary directory
   ansible.builtin.file:
@@ -53,4 +54,4 @@
 - name: Install uv package
   ansible.builtin.pip:
     name: uv
-    path: "pip{{ python_major_minor_version }}"
+    executable: "pip{{ python_major_minor_version }}"
