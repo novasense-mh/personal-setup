@@ -68,6 +68,7 @@
           - wget
           - xclip
         state: present
+      become: true
 
     - name: Download and make AppImages executable
       ansible.builtin.get_url:
