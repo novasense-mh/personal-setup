@@ -54,6 +54,7 @@
           - curl
           - fonts-powerline
           - gcc
+          - gimp
           - git
           - htop
           - neovim
