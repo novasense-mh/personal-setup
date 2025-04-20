@@ -43,6 +43,7 @@
   ansible.builtin.command:
     cmd: make altinstall
     chdir: "/tmp/Python-{{ python_version }}"
+  become: true
 
 - name: Remove the downloaded tarball
   ansible.builtin.file:
@@ -52,3 +53,4 @@
 - name: Install uv package
   ansible.builtin.pip:
     name: uv
+    path: "pip{{ python_major_minor_version }}"
