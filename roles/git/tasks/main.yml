@@ -44,3 +44,7 @@
 - name: Set git delta side-by-side
   ansible.builtin.command:
     cmd: git config --global delta.side-by-side true
+
+- name: Set git to auto-setup remote on push
+  ansible.builtin.command:
+    cmd: git config --global push.autoSetupRemote true
