@@ -11,6 +11,7 @@
       - libreadline-dev
       - zlib1g-dev
       - libffi-dev
+      - liblzma-dev
     state: present
   become: true
 
@@ -34,11 +35,13 @@
   ansible.builtin.command:
     cmd: ./configure --enable-optimizations --with-ensurepip=install --with-lto
     chdir: "/tmp/Python-{{ python_version }}"
+  become: true
 
 - name: Build Python
   ansible.builtin.command:
     cmd: make -j "{{ ansible_processor_count }}"
     chdir: "/tmp/Python-{{ python_version }}"
+  become: true
 
 - name: Install Python
   ansible.builtin.command:

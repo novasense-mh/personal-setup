@@ -3,6 +3,7 @@
     url: https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh
     dest: /tmp/Joplin_install_and_update.sh
     mode: '0755'
+  become: true
 
 - name: Run Joplin installation script
   ansible.builtin.command:

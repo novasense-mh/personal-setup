@@ -7,6 +7,7 @@
         cache_valid_time: 3600
       changed_when: false
       tags: always
+      become: true
 
     - name: Detect Host User
       ansible.builtin.import_tasks: pre_tasks/whoami.yml
